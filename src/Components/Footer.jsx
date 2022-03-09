@@ -5,7 +5,7 @@ import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 class Footer extends React.Component{
     render(){
         return(
-            <div className="container-fluid">
+            <div className="container-fluid" style={{ position: 'absolute', bottom: '0px' }}>
                 <div className='row' style={{height: '75px'}}>
                     <div className='col-6 align-self-center'>
                         <span className='ml-5'>Betingelser og vilkår</span>
