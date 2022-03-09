@@ -20,4 +20,4 @@ function PhoneValidator(inputUser){
     return true
 }
 
-console.log(PhoneValidator('081335719893'))
+export default PhoneValidator

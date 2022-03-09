@@ -26,4 +26,4 @@ function EmailValidator(inputUser){
     return true
 }
 
-console.log(EmailValidator('ryan@gmail.com'))
+export default EmailValidator
