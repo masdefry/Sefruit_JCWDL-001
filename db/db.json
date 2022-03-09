@@ -1,0 +1,24 @@
+{
+    "users": [
+        {
+            "email": "",
+            "phone": "081335719893",
+            "username": "ryandefryan",
+            "password": "333333333",
+            "role": "user",
+            "id": 1
+        }
+    ],
+
+    "products": [
+        {
+            "name": "Strawberry",
+            "category": "Buah",
+            "price": 12000,
+            "unit": "Kg",
+            "stock": 50,
+            "discount": 10,
+            "image": "https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//109/MTA-14288788/bakoel_sayur_online_buah_strawberry_-_stroberi_-_bakoel_sayur_online_full01_llrb9j9n.jpg"
+        }
+    ]
+}
