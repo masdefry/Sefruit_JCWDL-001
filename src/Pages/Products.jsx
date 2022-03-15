@@ -1,12 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { API_URL } from '../Supports/helper'
+import CardProduct from '../Components/CardProduct';
 
 class ProductsPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         products: [],
         activePage: 1
@@ -37,14 +34,7 @@ class ProductsPage extends React.Component {
         // page 3 : 16-24
         return products.slice(activePage == 1 ? activePage - 1 : (activePage - 1) * 8, activePage * 8).map((value, index) => {
             return <div className='col-12 col-md-6 col-lg-3 my-2' key={value.id}>
-                <div className="card">
-                    <img src={value.images[0]} className="card-img-top" alt="..." />
-                    <div className="card-body d-flex justify-content-between">
-                        <h5 className="card-title">{value.name}</h5>
-                        <h5 className="card-title" style={{ fontWeight: "600" }}>Rp. {value.price.toLocaleString()}</h5>
-                    </div>
-                    <button className='btn btn-info'>Add To Cart</button>
-                </div>
+                <CardProduct detail={value} />
             </div>
         })
     }
