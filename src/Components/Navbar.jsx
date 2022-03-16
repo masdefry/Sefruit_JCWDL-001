@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faBasketShopping } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 import ModalLogin from './ModalLogin';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'; // menghubungkan component dengan redux store
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
-
+import { logoutAction } from '../redux/actions/userAction'
 class Navbar extends React.Component {
 
     state = {
@@ -75,7 +75,7 @@ class Navbar extends React.Component {
                                                     Profile
                                                 </DropdownItem>
                                                 <DropdownItem divider />
-                                                <DropdownItem>
+                                                <DropdownItem onClick={this.props.logoutAction}>
                                                     Logout
                                                 </DropdownItem>
                                             </DropdownMenu>
@@ -109,4 +109,4 @@ const mapToProps = (state) => {
     }
 }
 
-export default connect(mapToProps)(Navbar);
+export default connect(mapToProps, { logoutAction })(Navbar);

@@ -5,3 +5,10 @@ export const loginAction = (dataLogin) => {
         payload: dataLogin
     }
 }
+
+export const logoutAction = () => {
+    localStorage.removeItem("tokenId");
+    return {
+        type: "LOGOUT"
+    }
+}
