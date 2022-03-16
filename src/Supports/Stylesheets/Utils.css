@@ -125,5 +125,17 @@
     position: relative;
     top: -100px;
     /* left:20px; */
-    color: white;
+    color: gray;
+}
+
+.sefruit-nav-page:hover{
+    color: black;
+}
+
+.sefruit-nav-page > h4{
+    font-weight: 600;
+    padding: 10px 20px;
+    width:fit-content;
+    border-radius: 0px 10px 10px 0px;
+    background-color:rgba(245, 246, 250,0.6);
 }

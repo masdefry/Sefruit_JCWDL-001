@@ -11,7 +11,7 @@ import ManageProducts from "./Pages/ManageProduct";
 
 function App() {
   return (
-    <div>
+    <div className="container-fluid">
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
