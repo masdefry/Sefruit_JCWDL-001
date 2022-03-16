@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faBasketShopping } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 import ModalLogin from './ModalLogin';
+import { connect } from 'react-redux';
 
 class Navbar extends React.Component {
 
@@ -60,4 +61,10 @@ class Navbar extends React.Component {
     }
 }
 
-export default Navbar
+const mapToProps = (state) => {
+    return {
+        username: state.userReducer.username
+    }
+}
+
+export default connect(mapToProps)(Navbar);

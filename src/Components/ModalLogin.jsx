@@ -20,8 +20,8 @@ const ModalLogin = (props) => {
         //     console.log("Input PASSWORD login ->", password)
         axios.get(API_URL + `/users?email=${email}&password=${password}`)
             .then((res) => {
-                console.log(res.data)
-                dispatch(loginAction(res.data))
+                console.log(res.data);
+                dispatch(loginAction(res.data[0]));
             }).catch((err) => {
                 console.log(err)
             })
