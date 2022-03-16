@@ -21,8 +21,8 @@ const ModalLogin = (props) => {
         axios.get(API_URL + `/users?email=${email}&password=${password}`)
             .then((res) => {
                 console.log(res.data);
-                dispatch(loginAction(res.data[0]));
-                props.handleModal()
+                dispatch(loginAction(res.data[0])); // mengarahkan data ke reducer
+                props.handleModal();// menutup modal
             }).catch((err) => {
                 console.log(err)
             })

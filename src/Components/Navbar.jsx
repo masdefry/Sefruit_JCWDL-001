@@ -4,11 +4,13 @@ import { faBars, faBasketShopping } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom';
 import ModalLogin from './ModalLogin';
 import { connect } from 'react-redux';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 
 class Navbar extends React.Component {
 
     state = {
-        modalOpen: false
+        modalOpen: false,
+        dropdownOpen: false
     }
 
     handleModalLogin = () => {
@@ -43,16 +45,54 @@ class Navbar extends React.Component {
                         </div>
                         <div className='col-4 sefruit-bg-light-grey py-3'>
                             <div className='d-flex flex-wrap justify-content-center align-items-center h-100 sefruit-main-dark'>
-                                <h4>{this.props.username}</h4>
-                                <button
-                                    className="btn btn-outline-info"
-                                    onClick={this.handleModalLogin}
-                                >
-                                    Login
-                                </button>
-                                <Link to="/register">
-                                    <button className="btn btn-light">Register</button>
-                                </Link>
+                                {
+                                    this.props.username ?
+                                        <Dropdown isOpen={this.state.dropdownOpen}
+                                            toggle={() => this.setState({ dropdownOpen: !this.state.dropdownOpen })}>
+                                            <DropdownToggle caret>
+                                                {this.props.username}
+                                            </DropdownToggle>
+                                            <DropdownMenu end>
+                                                {
+                                                    this.props.role == "Admin"
+                                                        ?
+                                                        <>
+                                                            <Link to="/manage-product" style={{ textDecoration: "none" }}>
+                                                                <DropdownItem>
+                                                                    Manage Products
+                                                                </DropdownItem>
+                                                            </Link>
+                                                            <DropdownItem>
+                                                                Manage Transactions
+                                                            </DropdownItem>
+                                                        </>
+                                                        :
+                                                        <DropdownItem>
+                                                            Transactions
+                                                        </DropdownItem>
+                                                }
+                                                <DropdownItem>
+                                                    Profile
+                                                </DropdownItem>
+                                                <DropdownItem divider />
+                                                <DropdownItem>
+                                                    Logout
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                        :
+                                        <>
+                                            <button
+                                                className="btn btn-outline-info"
+                                                onClick={this.handleModalLogin}
+                                            >
+                                                Login
+                                            </button>
+                                            <Link to="/register">
+                                                <button className="btn btn-light">Register</button>
+                                            </Link>
+                                        </>
+                                }
                             </div>
                         </div>
                     </div>
@@ -64,7 +104,8 @@ class Navbar extends React.Component {
 
 const mapToProps = (state) => {
     return {
-        username: state.userReducer.username
+        username: state.userReducer.username,
+        role: state.userReducer.role
     }
 }
 
