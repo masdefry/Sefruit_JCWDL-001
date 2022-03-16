@@ -3,7 +3,13 @@ import React from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { API_URL } from '../Supports/helper';
 
+// Import untuk penggunaan redux
+import { useDispatch } from "react-redux";
+import { loginAction } from '../redux/actions/userAction';
+
 const ModalLogin = (props) => {
+    // dispatch hooks untuk menjalankan action dari redux
+    const dispatch = useDispatch();
 
     // Penampung data login
     const [email, setEmail] = React.useState(null);
@@ -13,11 +19,12 @@ const ModalLogin = (props) => {
         //     console.log("Input EMAIL login ->", email)
         //     console.log("Input PASSWORD login ->", password)
         axios.get(API_URL + `/users?email=${email}&password=${password}`)
-        .then((res)=>{
-            console.log(res.data)
-        }).catch((err)=>{
-            console.log(err)
-        })
+            .then((res) => {
+                console.log(res.data)
+                dispatch(loginAction(res.data))
+            }).catch((err) => {
+                console.log(err)
+            })
     }
 
     return (
