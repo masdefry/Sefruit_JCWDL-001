@@ -49,7 +49,7 @@ class Navbar extends React.Component {
                                     this.props.username ?
                                         <Dropdown isOpen={this.state.dropdownOpen}
                                             toggle={() => this.setState({ dropdownOpen: !this.state.dropdownOpen })}>
-                                            <DropdownToggle caret>
+                                            <DropdownToggle color='info' caret>
                                                 {this.props.username}
                                             </DropdownToggle>
                                             <DropdownMenu end>
