@@ -4,11 +4,18 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css'; // import css bootstrap module
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { createStore } from 'redux';
+import { rootReducers } from './redux/reducers';
+import { Provider } from 'react-redux';
+
+const globalStore = createStore(rootReducers);
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={globalStore}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
