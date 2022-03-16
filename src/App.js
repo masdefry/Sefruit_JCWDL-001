@@ -11,12 +11,18 @@ import ManageProducts from "./Pages/ManageProduct";
 import React from "react";
 import axios from "axios";
 import { API_URL } from "./Supports/helper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "./redux/actions/userAction";
 
 function App() {
 
   const dispatch = useDispatch();
+
+  const { role } = useSelector(({ userReducer }) => {
+    return {
+      role: userReducer.role
+    }
+  });
 
   const keepLogin = () => {
     let tokenId = localStorage.getItem("tokenId");
@@ -45,7 +51,11 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/detail" element={<DetailProduct />} />
-        <Route path="/manage-product" element={<ManageProducts />} />
+        {
+          role == "Admin" ?
+            <Route path="/manage-product" element={<ManageProducts />} />
+            : ""
+        }
       </Routes>
       {/* <Footer /> */}
     </div>
