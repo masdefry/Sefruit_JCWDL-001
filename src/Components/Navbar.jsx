@@ -5,19 +5,30 @@ import { Link } from 'react-router-dom';
 import ModalLogin from './ModalLogin';
 import { connect } from 'react-redux'; // menghubungkan component dengan redux store
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
-import { logoutAction } from '../redux/actions/userAction'
+import { logoutAction } from '../redux/actions/userAction';
+import { Navigate } from 'react-router-dom';
 class Navbar extends React.Component {
 
     state = {
         modalOpen: false,
-        dropdownOpen: false
+        dropdownOpen: false,
+        redirect: false
     }
 
     handleModalLogin = () => {
         this.setState({ modalOpen: !this.state.modalOpen });
+    };
+
+    handleLogout = () => {
+        this.props.logoutAction();
+        this.setState({ redirect: true })
     }
 
     render() {
+        if (this.state.redirect) {
+            this.setState({ redirect: false })
+            return <Navigate to="/" />
+        }
         return (
             <div className='row'>
                 <ModalLogin
@@ -75,7 +86,7 @@ class Navbar extends React.Component {
                                                     Profile
                                                 </DropdownItem>
                                                 <DropdownItem divider />
-                                                <DropdownItem onClick={this.props.logoutAction}>
+                                                <DropdownItem onClick={this.handleLogout}>
                                                     Logout
                                                 </DropdownItem>
                                             </DropdownMenu>
