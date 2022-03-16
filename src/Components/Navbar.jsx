@@ -43,6 +43,7 @@ class Navbar extends React.Component {
                         </div>
                         <div className='col-4 sefruit-bg-light-grey py-3'>
                             <div className='d-flex flex-wrap justify-content-center align-items-center h-100 sefruit-main-dark'>
+                                <h4>{this.props.username}</h4>
                                 <button
                                     className="btn btn-outline-info"
                                     onClick={this.handleModalLogin}

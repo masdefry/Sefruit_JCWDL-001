@@ -22,6 +22,7 @@ const ModalLogin = (props) => {
             .then((res) => {
                 console.log(res.data);
                 dispatch(loginAction(res.data[0]));
+                props.handleModal()
             }).catch((err) => {
                 console.log(err)
             })
