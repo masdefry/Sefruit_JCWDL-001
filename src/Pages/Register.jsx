@@ -1,17 +1,23 @@
+import axios from 'axios';
 import React from 'react';
 import EmailValidator from './../Supports/Functions/EmailValidator';
 import PhoneValidator from './../Supports/Functions/PhoneValidator';
+import { API_URL } from '../Supports/helper'
+import { loginAction } from '../redux/actions/userAction'
+import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 class Register extends React.Component {
 
     state = {
         error: null,
         phoneNumber: null,
-        email: null
+        email: null,
+        redirect: false
     }
 
     // r
     onValidation = () => {
-        let inputEmailOrPhone = this.refs.inputEmailOrPhone.value // r -> ryan.fandy@gmail.com
+        let inputEmailOrPhone = this.refs.inputEmail.value // r -> ryan.fandy@gmail.com
 
         if (inputEmailOrPhone) {
             if (!inputEmailOrPhone.includes('@')) { // Apabila Index Ke-0 Aalah Number
@@ -39,14 +45,32 @@ class Register extends React.Component {
     }
 
     handleRegister = () => {
-        console.log(this.props.inputUsername)
-        console.log(this.props.inputEmail)
-        console.log(this.props.inPassword)
-        console.log(this.props.inConfPassword)
+        console.log(this.refs.inputUsername.value)
+        console.log(this.refs.inputEmail.value)
+        console.log(this.refs.inPassword.value)
+        console.log(this.refs.inConfPassword.value)
 
+        axios.post(API_URL + `/users`, {
+            username: this.refs.inputUsername.value,
+            email: this.refs.inputEmail.value,
+            password: this.refs.inPassword.value,
+            role: "User",
+            status: "Active",
+            cart: []
+        }).then((res) => {
+            console.log("Response register", res.data);
+            localStorage.setItem("tokenId", res.data.id);
+            this.props.loginAction(res.data);
+            this.setState({ redirect: true })
+        }).catch((err) => {
+            console.log(err);
+        })
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Navigate to="/" />
+        }
         return (
             <div className="container">
                 <div className='row align-items-center mx-5 my-5 border border-grey' style={{ height: '68vh' }}>
@@ -82,7 +106,7 @@ class Register extends React.Component {
                         </div>
                         <div className='mt-3'>
                             {/* <input type="button" value="Register" className='btn sefruit-bg-secondary-light sefruit-main-light mb-3' /> */}
-                            <button className='btn btn-light'>Register</button>
+                            <button className='btn btn-light' onClick={this.handleRegister}>Register</button>
                         </div>
                         <div>
                             <h6 className='sefruit-danger'>
@@ -96,4 +120,4 @@ class Register extends React.Component {
     }
 }
 
-export default Register
+export default connect(null, { loginAction })(Register);
