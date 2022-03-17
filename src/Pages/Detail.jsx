@@ -2,14 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import { API_URL } from '../Supports/helper';
 import { connect } from 'react-redux';
-
+import { Toast, ToastHeader, ToastBody } from 'reactstrap';
 class DetailProduct extends React.Component {
     constructor(props) {
         super(props);
     }
     state = {
         detail: {},
-        qty: 1
+        qty: 1,
+        toastOpen: false
     }
 
     componentDidMount() {
@@ -61,14 +62,22 @@ class DetailProduct extends React.Component {
                     console.log(err)
                 })
         } else {
-            alert("Silahkan login dahulu")
+            this.setState({ toastOpen: !this.state.toastOpen })
         }
     }
 
     render() {
-        let { detail, qty } = this.state;
+        let { detail, qty, toastOpen } = this.state;
         return (
             <div className='container py-5'>
+                <Toast isOpen={toastOpen} style={{ position: "fixed", right: 5 }}>
+                    <ToastHeader icon="warning" toggle={() => this.setState({ toastOpen: !toastOpen })}>
+                        Attention ⚠️
+                    </ToastHeader>
+                    <ToastBody>
+                        Silahkan login dahulu
+                    </ToastBody>
+                </Toast>
                 <div className='row'>
                     <div className='col-md-6'>
                         {
