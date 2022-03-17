@@ -26,6 +26,18 @@ class DetailProduct extends React.Component {
             })
     }
 
+    handleInc = () => {
+        let temp = this.state.qty;
+        temp += 1;
+        this.setState({ qty: temp });
+    }
+    
+    handleDec = () => {
+        let temp = this.state.qty;
+        temp -= 1;
+        this.setState({ qty: temp });
+    }
+
     render() {
         let { detail, qty } = this.state;
         return (
@@ -49,9 +61,9 @@ class DetailProduct extends React.Component {
                             <div className='mx-5'>
                                 <h5 className='fw-bold mt-4'>How many buy ?</h5>
                                 <div className='d-flex align-items-center'>
-                                    <button className='btn btn-outline-warning'>-</button>
+                                    <button className='btn btn-outline-warning' onClick={this.handleDec}>-</button>
                                     <h5 className='mx-2'>{qty}</h5>
-                                    <button className='btn btn-outline-primary'>+</button>
+                                    <button className='btn btn-outline-primary' onClick={this.handleInc}>+</button>
                                 </div>
                             </div>
                         </div>
