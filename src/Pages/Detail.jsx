@@ -7,7 +7,8 @@ class DetailProduct extends React.Component {
         super(props);
     }
     state = {
-        detail: {}
+        detail: {},
+        qty: 1
     }
 
     componentDidMount() {
@@ -26,7 +27,7 @@ class DetailProduct extends React.Component {
     }
 
     render() {
-        let { detail } = this.state;
+        let { detail, qty } = this.state;
         return (
             <div className='container py-5'>
                 <div className='row'>
@@ -37,7 +38,23 @@ class DetailProduct extends React.Component {
                         }
                     </div>
                     <div className='col-md-6'>
-                        <h2>{detail.name}</h2>
+                        <h2 className='fw-bold'>{detail.name}</h2>
+                        <h5 className='fw-bold mt-4'>Description</h5>
+                        <p>{detail.description}</p>
+                        <div className='d-flex'>
+                            <div>
+                                <h5 className='fw-bold mt-4'>Weight</h5>
+                                <h6 className='text-muted'>{detail.weight} gram</h6>
+                            </div>
+                            <div className='mx-5'>
+                                <h5 className='fw-bold mt-4'>How many buy ?</h5>
+                                <div className='d-flex align-items-center'>
+                                    <button className='btn btn-outline-warning'>-</button>
+                                    <h5 className='mx-2'>{qty}</h5>
+                                    <button className='btn btn-outline-primary'>+</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
