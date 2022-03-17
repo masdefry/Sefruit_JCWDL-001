@@ -45,11 +45,6 @@ class Register extends React.Component {
     }
 
     handleRegister = () => {
-        console.log(this.refs.inputUsername.value)
-        console.log(this.refs.inputEmail.value)
-        console.log(this.refs.inPassword.value)
-        console.log(this.refs.inConfPassword.value)
-
         axios.post(API_URL + `/users`, {
             username: this.refs.inputUsername.value,
             email: this.refs.inputEmail.value,
