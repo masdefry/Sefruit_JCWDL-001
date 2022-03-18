@@ -20,6 +20,25 @@ export const loginAction = (email, password) => {
     }
 }
 
+export const keepLoginAction = () => {
+    return async (dispatch) => {
+        try {
+            let tokenId = localStorage.getItem("tokenId");
+            if (tokenId) {
+                let res = await axios.get(API_URL + `/users?id=${tokenId}`)
+                localStorage.setItem("tokenId", res.data[0].id);
+
+                dispatch({
+                    type: "LOGIN_SUCCESS",
+                    payload: res.data[0]
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export const logoutAction = () => {
     localStorage.removeItem("tokenId");
     return {

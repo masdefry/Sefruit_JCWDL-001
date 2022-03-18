@@ -12,7 +12,7 @@ import React from "react";
 import axios from "axios";
 import { API_URL } from "./Supports/helper";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAction } from "./redux/actions/userAction";
+import { keepLoginAction } from "./redux/actions/userAction";
 
 function App() {
 
@@ -25,18 +25,7 @@ function App() {
   });
 
   const keepLogin = () => {
-    let tokenId = localStorage.getItem("tokenId");
-
-    if (tokenId) {
-      axios.get(API_URL + `/users?id=${tokenId}`)
-        .then((res) => {
-          localStorage.setItem("tokenId", res.data[0].id);
-          dispatch(loginAction(res.data[0]));
-        }).catch((err) => {
-          console.log(err);
-        })
-    }
-
+    dispatch(keepLoginAction());
   }
 
   React.useEffect(() => {
