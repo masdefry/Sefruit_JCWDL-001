@@ -76,12 +76,37 @@ class Register extends React.Component {
             }).catch((err) => {
                 console.log(err)
             })
+
     }
 
     // cara 2 with promisify try catch in axios with async await
     handleRegisterAsync = async () => {
         try {
+            // 1. pengambilan data berdasarkan email
+            let resGet = await axios.get(API_URL + `/users?email=${this.refs.inputEmail.value}`);
+            // 2. jika data tidak ada, maka kita lanjut registrasi
+            if (resGet.data.length == 0) {
+                // axios post
+                let resPost = await axios.post(API_URL + `/users`, {
+                    username: this.refs.inputUsername.value,
+                    email: this.refs.inputEmail.value,
+                    password: this.refs.inPassword.value,
+                    role: "User",
+                    status: "Active",
+                    cart: []
+                })
 
+                console.log("Response register", resPost.data);
+                if (resPost.data.id) {
+                    localStorage.setItem("tokenId", resPost.data.id);
+                    this.props.loginAction(resPost.data);
+                    this.setState({ redirect: true })
+                }
+
+            } else {
+                // 2. jika data ada, maka muncukl alert
+                this.setState({ error: "Email exist ⚠️`" })
+            }
         } catch (error) {
             console.log(error)
         }
@@ -144,7 +169,7 @@ class Register extends React.Component {
                         </div>
                         <div className='mt-3'>
                             {/* <input type="button" value="Register" className='btn sefruit-bg-secondary-light sefruit-main-light mb-3' /> */}
-                            <button className='btn btn-light' onClick={this.handleRegister}>Register</button>
+                            <button className='btn btn-light' onClick={this.handleRegisterAsync}>Register</button>
                         </div>
                         <div>
                             <h6 className='sefruit-danger'>
