@@ -22,17 +22,18 @@ const ModalLogin = (props) => {
     const handleLogin = () => {
         //     console.log("Input EMAIL login ->", email)
         //     console.log("Input PASSWORD login ->", password)
-        axios.get(API_URL + `/users?email=${email}&password=${password}`)
-            .then((res) => {
-                console.log(res.data);
-                // menyimpan data ke localstorage browser
-                localStorage.setItem("tokenId", res.data[0].id);
+        // axios.get(API_URL + `/users?email=${email}&password=${password}`)
+        //     .then((res) => {
+        //         console.log(res.data);
+        //         // menyimpan data ke localstorage browser
+        //         localStorage.setItem("tokenId", res.data[0].id);
 
-                dispatch(loginAction(res.data[0])); // mengarahkan data ke reducer
-                props.handleModal();// menutup modal
-            }).catch((err) => {
-                console.log(err)
-            })
+        //         dispatch(loginAction(res.data[0])); // mengarahkan data ke reducer
+        //     }).catch((err) => {
+        //         console.log(err)
+        //     })
+        dispatch(loginAction(email, password));
+        props.handleModal();// menutup modal
     }
 
     const handleVisible = () => {

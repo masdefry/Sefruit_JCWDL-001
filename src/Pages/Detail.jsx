@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_URL } from '../Supports/helper';
 import { connect } from 'react-redux';
 import { Toast, ToastHeader, ToastBody } from 'reactstrap';
-import { updateCart } from '../redux/actions/userAction'
+import { updateCart } from '../redux/actions/userAction';
 class DetailProduct extends React.Component {
     constructor(props) {
         super(props);
@@ -59,6 +59,7 @@ class DetailProduct extends React.Component {
             })
                 .then((res) => {
                     console.log(res.data)
+                    // memperbarui data cart pada global store/redux
                     this.props.updateCart(res.data.cart);
                 }).catch((err) => {
                     console.log(err)

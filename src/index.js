@@ -4,11 +4,12 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css'; // import css bootstrap module
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { rootReducers } from './redux/reducers';
 import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 
-const globalStore = createStore(rootReducers);
+const globalStore = createStore(rootReducers, {}, applyMiddleware(ReduxThunk));
 
 ReactDOM.render(
   <Provider store={globalStore}>
