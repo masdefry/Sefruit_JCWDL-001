@@ -24,7 +24,15 @@
       "password": "1234",
       "role": "User",
       "status": "Active",
-      "cart": [],
+      "cart": [
+        {
+          "idProduct": 1,
+          "name": "Orange",
+          "image": "https://cdn.shopify.com/s/files/1/0572/5005/4294/products/11.1.jpg?v=1623396707",
+          "qty": 3,
+          "price": 2285
+        }
+      ],
       "id": 3
     },
     {

@@ -14,6 +14,10 @@ const ModalLogin = (props) => {
     // Penampung data login
     const [email, setEmail] = React.useState(null);
     const [password, setPassword] = React.useState(null);
+    const [inVisible, setInVisible] = React.useState({
+        type: "password",
+        title: "Show"
+    });
 
     const handleLogin = () => {
         //     console.log("Input EMAIL login ->", email)
@@ -23,12 +27,26 @@ const ModalLogin = (props) => {
                 console.log(res.data);
                 // menyimpan data ke localstorage browser
                 localStorage.setItem("tokenId", res.data[0].id);
-                
+
                 dispatch(loginAction(res.data[0])); // mengarahkan data ke reducer
                 props.handleModal();// menutup modal
             }).catch((err) => {
                 console.log(err)
             })
+    }
+
+    const handleVisible = () => {
+        if (inVisible.type == "password") {
+            setInVisible({
+                type: "text",
+                title: "Hide"
+            })
+        } else {
+            setInVisible({
+                type: "password",
+                title: "Show"
+            })
+        }
     }
 
     return (
@@ -44,8 +62,8 @@ const ModalLogin = (props) => {
                 <div>
                     <label className='form-label'>Password</label>
                     <div className='input-group'>
-                        <input type="password" className="form-control" onChange={(element) => setPassword(element.target.value)} />
-                        <span className='input-group-text'>Show</span>
+                        <input type={inVisible.type} className="form-control" onChange={(element) => setPassword(element.target.value)} />
+                        <span className='input-group-text' onClick={handleVisible}>{inVisible.title}</span>
                     </div>
                 </div>
             </ModalBody>
