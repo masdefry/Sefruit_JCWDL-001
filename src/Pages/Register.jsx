@@ -12,7 +12,11 @@ class Register extends React.Component {
         error: null,
         phoneNumber: null,
         email: null,
-        redirect: false
+        redirect: false,
+        visible: {
+            type: "password",
+            title: "Show"
+        }
     }
 
     // r
@@ -44,22 +48,61 @@ class Register extends React.Component {
         }
     }
 
+    // cara 1 with promisify then catch in axios
     handleRegister = () => {
-        axios.post(API_URL + `/users`, {
-            username: this.refs.inputUsername.value,
-            email: this.refs.inputEmail.value,
-            password: this.refs.inPassword.value,
-            role: "User",
-            status: "Active",
-            cart: []
-        }).then((res) => {
-            console.log("Response register", res.data);
-            localStorage.setItem("tokenId", res.data.id);
-            this.props.loginAction(res.data);
-            this.setState({ redirect: true })
-        }).catch((err) => {
-            console.log(err);
-        })
+        axios.get(API_URL + `/users?email=${this.refs.inputEmail.value}`)
+            .then((res) => {
+                if (res.data.length == 0) {
+                    // axios post
+                    axios.post(API_URL + `/users`, {
+                        username: this.refs.inputUsername.value,
+                        email: this.refs.inputEmail.value,
+                        password: this.refs.inPassword.value,
+                        role: "User",
+                        status: "Active",
+                        cart: []
+                    }).then((res) => {
+                        console.log("Response register", res.data);
+                        localStorage.setItem("tokenId", res.data.id);
+                        this.props.loginAction(res.data);
+                        this.setState({ redirect: true })
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                } else {
+                    this.setState({ error: "Email exist ⚠️`" })
+                }
+
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
+
+    // cara 2 with promisify try catch in axios with async await
+    handleRegisterAsync = async () => {
+        try {
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    handleVisible = () => {
+        if (this.state.visible.type == "password") {
+            this.setState({
+                visible: {
+                    type: "text",
+                    title: "Hide"
+                }
+            })
+        } else {
+            this.setState({
+                visible: {
+                    type: "password",
+                    title: "Show"
+                }
+            })
+        }
     }
 
     render() {
@@ -68,7 +111,7 @@ class Register extends React.Component {
         }
         return (
             <div className="container">
-                <div className='row align-items-center mx-5 my-5 border border-grey' style={{ height: '68vh' }}>
+                <div className='row align-items-center mx-5 my-5 border border-grey'>
                     <div className="col-6">
                         <img
                             src='https://image.winudf.com/v2/image/Y29tLmVsZW5zd2VldG1vb2QxMi5mcnVpdHNuY2hvY29sYXRlX3NjcmVlbl8xXzE1Mzc4NzU1NDJfMDU1/screen-1.jpg?fakeurl=1&type=.webp'
@@ -89,14 +132,14 @@ class Register extends React.Component {
                         </div>
                         <div className='mt-3'>
                             <div className='input-group'>
-                                <input type="password" ref="inPassword" placeholder="Enter Your Password" className="form-control" />
-                                <span className='input-group-text'>Show</span>
+                                <input type={this.state.visible.type} ref="inPassword" placeholder="Enter Your Password" className="form-control" />
+                                <span className='input-group-text' onClick={this.handleVisible}>{this.state.visible.title}</span>
                             </div>
                         </div>
                         <div className='mt-3'>
                             <div className='input-group'>
                                 <input type="password" ref="inConfPassword" placeholder="Enter Confirmation Password" className="form-control" />
-                                <span className='input-group-text'>Show</span>
+                                <span className='input-group-text' >Show</span>
                             </div>
                         </div>
                         <div className='mt-3'>

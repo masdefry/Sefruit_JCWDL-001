@@ -43,6 +43,15 @@
       "status": "Active",
       "cart": [],
       "id": 4
+    },
+    {
+      "username": "Al",
+      "email": "abdi01@mail.com",
+      "password": "1234",
+      "role": "User",
+      "status": "Active",
+      "cart": [],
+      "id": 5
     }
   ],
   "products": [
