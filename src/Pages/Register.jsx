@@ -105,7 +105,7 @@ class Register extends React.Component {
 
             } else {
                 // 2. jika data ada, maka muncukl alert
-                this.setState({ error: "Email exist ⚠️`" })
+                this.setState({ error: "Email exist ⚠️" })
             }
         } catch (error) {
             console.log(error)
