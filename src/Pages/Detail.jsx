@@ -10,6 +10,7 @@ class DetailProduct extends React.Component {
     }
     state = {
         detail: {},
+        mainImage: null, 
         qty: 1,
         toastOpen: false
     }
@@ -22,8 +23,9 @@ class DetailProduct extends React.Component {
         console.log(window.location.search)
         axios.get(API_URL + `/products${window.location.search}`)
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data[0].images);
                 this.setState({ detail: res.data[0] })
+                this.setState({ mainImage: res.data[0].images[0] }) 
             }).catch((err) => {
                 console.log(err);
             })
@@ -45,14 +47,29 @@ class DetailProduct extends React.Component {
         if (this.props.id) {
             // menduplikasi data dari cart reduser, untuk mendapatkan data keranjang sebelumnya
             let temp = [...this.props.cart];
-            // menambahkan data cart baru kedalam temp data
-            temp.push({
-                idProduct: this.state.detail.id,
-                name: this.state.detail.name,
-                image: this.state.detail.images[0],
-                qty: this.state.qty,
-                price: this.state.detail.price
+            
+            // kita cek, apakah product ada di dalam reducer?
+            let idx = null
+            temp.forEach((value, index) => {
+                if(this.state.detail.id === value.idProduct){
+                    idx = index
+                }
             })
+
+            if(idx !== null){
+                console.log('Masuk')
+                // Apabila sudah ada, kita update qty
+                temp[idx].qty = temp[idx].qty + this.state.qty 
+            }else{
+                // Apabila belum ada, menambahkan data cart baru kedalam temp data
+                temp.push({
+                    idProduct: this.state.detail.id,
+                    name: this.state.detail.name,
+                    image: this.state.detail.images[0],
+                    qty: this.state.qty,
+                    price: this.state.detail.price
+                })
+            }
             // memperbarui data cart pada db.json setelah data cart yg baru ditambahkan
             axios.patch(API_URL + `/users/${this.props.id}`, {
                 cart: temp
@@ -70,7 +87,7 @@ class DetailProduct extends React.Component {
     }
 
     render() {
-        let { detail, qty, toastOpen } = this.state;
+        let { detail, mainImage, qty, toastOpen } = this.state;
         return (
             <div className='container py-5'>
                 <Toast isOpen={toastOpen} style={{ position: "fixed", right: 5 }}>
@@ -85,7 +102,7 @@ class DetailProduct extends React.Component {
                     <div className='col-md-6'>
                         {
                             detail.images &&
-                            <img src={detail.images[0]} alt={`sefruit-${detail.name}`} width="100%" />
+                            <img src={mainImage} alt={`sefruit-${detail.name}`} width="100%" /> // Image pertama > Image kedua
                         }
                     </div>
                     <div className='col-md-6'>
@@ -116,6 +133,17 @@ class DetailProduct extends React.Component {
                             Buy
                         </button>
                     </div>
+                    {   detail.images? 
+                            detail.images.map((value, index) => {
+                                return(
+                                    <div className="col-md-3">
+                                        <img src={value} alt={`sefruit-${detail.name}`} width="50%" onClick={() => this.setState({ mainImage: value })} className={value === this.state.mainImage? 'border border-warning' : null} />
+                                    </div>
+                                )
+                            })
+                        :
+                            null
+                    }
                 </div>
             </div>
         );

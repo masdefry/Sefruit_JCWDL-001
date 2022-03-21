@@ -8,6 +8,7 @@ import './Supports/Stylesheets/Utils.css'
 import ProductsPage from "./Pages/Products";
 import DetailProduct from "./Pages/Detail";
 import ManageProducts from "./Pages/ManageProduct";
+import PageNotFound from "./Pages/404";
 import React from "react";
 import axios from "axios";
 import { API_URL } from "./Supports/helper";
@@ -40,6 +41,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/detail" element={<DetailProduct />} />
+        <Route path="*" element={<PageNotFound />} />
         {
           role == "Admin" ?
             <Route path="/manage-product" element={<ManageProducts />} />
